@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"testing"
 )
+
 //优点:实现了解耦
 //缺点:违背 "开闭原则"
 //适合:创建的对象比较少
@@ -16,15 +17,15 @@ type Products interface {
 
 //产品
 type Drink struct {
-	name     string
-	code     int
+	name string
+	code int
 }
 
-func (p *Drink)SetName(name string)  {
+func (p *Drink) SetName(name string) {
 	p.name = name
 }
 
-func (p *Drink)GetName()string  {
+func (p *Drink) GetName() string {
 	return "Product's name is " + p.name
 }
 
@@ -53,38 +54,36 @@ func newOrange() *orange {
 }
 
 //工厂
-type ProductFactory2 struct {
-
+type ProductFactory_ struct {
 }
 
-const  (
+const (
 	product1 = "milk"
-	product2 ="orange"
+	product2 = "orange"
 )
 
-func (pf ProductFactory2)Create(productType string)(Products,error)  {
+func (pf ProductFactory_) Create(productType string) (Products, error) {
 	switch productType {
 	case product1:
-		return newMilk(),nil
+		return newMilk(), nil
 	case product2:
-		return newOrange(),nil
+		return newOrange(), nil
 	default:
-		return nil,errors.New("not found")
+		return nil, errors.New("not found")
 	}
 
 }
 
-func TestSimpleFactoryModel2(t *testing.T){
-	var pf ProductFactory2
-	p,err := pf.Create("milk")
-	if err == nil{
+func TestSimpleFactoryModel2(t *testing.T) {
+	var pf ProductFactory_
+	p, err := pf.Create("milk")
+	if err == nil {
 		fmt.Println(p.GetName())
 	}
 
-	p,err = pf.Create("orange")
-	if err == nil{
+	p, err = pf.Create("orange")
+	if err == nil {
 		fmt.Println(p.GetName())
 	}
 
 }
-
