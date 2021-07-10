@@ -53,5 +53,4 @@ func TestDecorator(t *testing.T) {
 	}
 	c2.Do()
 	fmt.Println(c2.getPrice())
-
 }
