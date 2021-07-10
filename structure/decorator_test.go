@@ -8,49 +8,50 @@ import (
 // 装饰器模式
 
 //定义抽象的组建
-type Component interface {
-	Operate()
+type Food interface {
+	getPrice() int
 }
 
-type Component1 struct {
+type milk struct {
 }
 
-func (c Component1) Operate() {
-	fmt.Println("c1 operate")
+func (c milk) getPrice() int {
+	return 15
 }
 
-//定义一个抽象的装饰器
-type Decorator interface {
-	Component
+//定义一个抽象的装饰器(增值服务)
+type DecoratorService interface {
+	Food
 	Do() //装饰行为，可以多个
 }
 
-//定义一个具体的装饰器
-
-type Decorator1 struct {
-	c Component
+//定义一个具体的装饰器(食物打包增值服务)
+type DecoratorServicePackage struct {
+	c Food
 }
 
-func (d Decorator1) Do() {
+func (d DecoratorServicePackage) Do() {
 	fmt.Println("c1 发生了装饰行为")
 }
 
-//重新实现Component的方法
-func (d Decorator1) Operate() {
-	d.Do()
-	d.c.Operate()
-	d.Do()
+//重新实现Food的方法
+func (d DecoratorServicePackage) getPrice() int {
+	price := d.c.getPrice()
+	return price + 10
 }
 
 func TestDecorator(t *testing.T) {
 	//无装饰模式
-	c1 := &Component1{}
-	c1.Operate()
+	c1 := &milk{}
+	fmt.Println(c1.getPrice())
+
 	fmt.Println("------")
+
 	//装饰模式
-	c2 := &Decorator1{
+	c2 := &DecoratorServicePackage{
 		c: c1,
 	}
-	c2.Operate()
+	c2.Do()
+	fmt.Println(c2.getPrice())
 
 }
