@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+//单例模式
 var once sync.Once
 
 type single struct {
