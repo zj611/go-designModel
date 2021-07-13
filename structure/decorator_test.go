@@ -34,7 +34,7 @@ func (d DecoratorServicePackage) Do() {
 	fmt.Println("c1 发生了装饰行为")
 }
 
-//重新实现Food的方法
+//重新实现Food的getPrice方法
 func (d DecoratorServicePackage) getPrice() int {
 	price := d.c.getPrice()
 	return price + 10
