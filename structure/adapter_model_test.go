@@ -11,15 +11,6 @@ type Player interface {
 	PlayMusic()
 }
 
-//音乐播放器
-type MusicPlayer struct {
-	src string
-}
-
-func (p MusicPlayer) Playmusic() {
-	fmt.Println("play music", p.src)
-}
-
 //游戏声音播放器
 type GameSoundPlayer struct {
 	src string
@@ -31,16 +22,16 @@ func (p GameSoundPlayer) PlayMusic() {
 
 //游戏音乐播放器适配音乐播放器
 type GameSoundPlayerAdapter struct {
-	SoundPlayer GameSoundPlayer
+	gameSoundPlayer GameSoundPlayer
 }
 
 func (g GameSoundPlayerAdapter) PlayMusic() {
-	g.SoundPlayer.PlayMusic()
+	g.gameSoundPlayer.PlayMusic()
 }
 
 func TestAdapterModel(t *testing.T) {
 	player := GameSoundPlayer{src: "game"}
-	playerAdapter := GameSoundPlayerAdapter{SoundPlayer: player}
+	playerAdapter := GameSoundPlayerAdapter{gameSoundPlayer: player}
 	play(playerAdapter)
 }
 
