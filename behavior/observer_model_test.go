@@ -15,36 +15,36 @@ type Subject interface {
 }
 
 //-------------天气主题------------------
-type NewsSubject struct {
+type WeatherSubject struct {
 	title string
 	l     *list.List
 }
 
 //天气主题非侵入式实现抽象主题
-func (sub *NewsSubject) Add(o Observer) {
+func (sub *WeatherSubject) Add(o Observer) {
 	sub.l.PushBack(o)
 }
 
 //天气主题非侵入式实现抽象主题
-func (sub *NewsSubject) Send(str string) {
+func (sub *WeatherSubject) Send(str string) {
 	for i := sub.l.Front(); i != nil; i = i.Next() {
 		(i.Value).(Observer).Receive(sub.title + "发送的：" + str)
 	}
 }
 
 //-------------热点主题------------------
-type HotSubject struct {
+type NewsSubject struct {
 	title string
 	l     *list.List
 }
 
 //热点主题非侵入式实现抽象主题
-func (sub *HotSubject) Add(o Observer) {
+func (sub *NewsSubject) Add(o Observer) {
 	sub.l.PushBack(o)
 }
 
 //热点主题非侵入式实现抽象主题
-func (sub *HotSubject) Send(str string) {
+func (sub *NewsSubject) Send(str string) {
 	for i := sub.l.Front(); i != nil; i = i.Next() {
 		(i.Value).(Observer).Receive(sub.title + "发送的：" + str)
 	}
@@ -84,21 +84,21 @@ func TestObserverModel(t *testing.T) {
 		name: "李四",
 	}
 
-	//新闻允许a和b类型观察者订阅
-	news := NewsSubject{
+	//天气类允许a和b类型观察者订阅
+	weather := WeatherSubject{
 		l:     list.New(),
 		title: "武汉新闻",
 	}
-	news.Add(a)
-	news.Add(b)
+	weather.Add(a)
+	weather.Add(b)
 
-	//热点只允许b类型观察者订阅
-	hot := HotSubject{
+	//新闻类只允许b类型观察者订阅
+	news := NewsSubject{
 		l:     list.New(),
 		title: "孝感热点",
 	}
-	hot.Add(b)
+	news.Add(b)
 
-	news.Send("全省暴雨红色警报")
-	hot.Send("全市停工停课")
+	weather.Send("全省暴雨红色警报")
+	news.Send("全市停工停课")
 }
