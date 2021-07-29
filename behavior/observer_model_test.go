@@ -32,18 +32,18 @@ func (sub *WeatherSubject) Send(str string) {
 	}
 }
 
-//-------------热点主题------------------
+//-------------新闻主题------------------
 type NewsSubject struct {
 	title string
 	l     *list.List
 }
 
-//热点主题非侵入式实现抽象主题
+//新闻主题非侵入式实现抽象主题
 func (sub *NewsSubject) Add(o Observer) {
 	sub.l.PushBack(o)
 }
 
-//热点主题非侵入式实现抽象主题
+//新闻主题非侵入式实现抽象主题
 func (sub *NewsSubject) Send(str string) {
 	for i := sub.l.Front(); i != nil; i = i.Next() {
 		(i.Value).(Observer).Receive(sub.title + "发送的：" + str)
